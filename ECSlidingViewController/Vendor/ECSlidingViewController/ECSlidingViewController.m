@@ -34,7 +34,7 @@ NSString *const ECSlidingViewTopDidReset             = @"ECSlidingViewTopDidRese
 - (UIView *)underLeftView;
 - (UIView *)underRightView;
 - (void)adjustLayout;
-- (void)updateTopViewHorizontalCenterWithRecognizer:(UIPanGestureRecognizer *)recognizer;
+
 - (void)updateTopViewHorizontalCenter:(CGFloat)newHorizontalCenter;
 - (void)topViewHorizontalCenterWillChange:(CGFloat)newHorizontalCenter;
 - (void)topViewHorizontalCenterDidChange:(CGFloat)newHorizontalCenter;

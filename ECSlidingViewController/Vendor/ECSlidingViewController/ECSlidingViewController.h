@@ -227,6 +227,8 @@ typedef enum {
 /** Returns true if the top view is completely off the screen */
 - (BOOL)topViewIsOffScreen;
 
+- (void)updateTopViewHorizontalCenterWithRecognizer:(UIPanGestureRecognizer *)recognizer;
+
 @end
 
 /** UIViewController extension */
