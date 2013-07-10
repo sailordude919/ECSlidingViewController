@@ -259,6 +259,47 @@ NSString *const ECSlidingViewTopDidReset             = @"ECSlidingViewTopDidRese
     }
 }
 
+- (void)updateTopViewHorizontalCenterWithOffset:(float)offset {
+    CGFloat newCenterPosition = self.initialHoizontalCenter - offset;
+    
+    if ((newCenterPosition < self.resettedCenter && self.anchorLeftTopViewCenter == NSNotFound) || (newCenterPosition > self.resettedCenter && self.anchorRightTopViewCenter == NSNotFound)) {
+        newCenterPosition = self.resettedCenter;
+    }
+    if (newCenterPosition < 421) {
+        [delegate slidingLeft:offset * -1];
+        
+        [self topViewHorizontalCenterWillChange:newCenterPosition];
+        [self updateTopViewHorizontalCenter:newCenterPosition];
+        [self topViewHorizontalCenterDidChange:newCenterPosition];
+    }
+}
+
+- (void)didEndDraggingWithOffset:(float)offset velocity:(float)velocity {
+    NSLog(@"did end dragging with offset: %f velocity: %f", offset, velocity);
+    if ([self underLeftShowing] && velocity > 100) {
+        [delegate stoppedSlidingWillGoRight];
+        [self anchorTopViewTo:ECRight];
+        
+    } else if ([self underRightShowing] && velocity < 100) {
+        [self anchorTopViewTo:ECLeft];
+    } else {
+
+        if (offset > 140) {
+            [self anchorTopViewTo:ECRight];
+            [delegate stoppedSlidingWillGoRight];
+        } else {
+            [self resetTopView];
+            [delegate stoppedSlidingWillGoLeft];
+        }
+        
+    }
+
+}
+
+- (void)willBeginDraggingWithoutGesture {
+    self.initialHoizontalCenter = self.topView.center.x;
+}
+
 - (void)updateTopViewHorizontalCenterWithRecognizer:(UIPanGestureRecognizer *)recognizer
 {
     

@@ -227,6 +227,12 @@ typedef enum {
 /** Returns true if the top view is completely off the screen */
 - (BOOL)topViewIsOffScreen;
 
+- (void)willBeginDraggingWithoutGesture;
+
+- (void)updateTopViewHorizontalCenterWithOffset:(float)offset;
+
+- (void)didEndDraggingWithOffset:(float)offset velocity:(float)velocity;
+
 - (void)updateTopViewHorizontalCenterWithRecognizer:(UIPanGestureRecognizer *)recognizer;
 
 @end
