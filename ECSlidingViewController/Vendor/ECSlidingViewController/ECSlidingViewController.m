@@ -96,6 +96,16 @@ NSString *const ECSlidingViewTopDidReset             = @"ECSlidingViewTopDidRese
 @synthesize topViewIsOffScreen = _topViewIsOffScreen;
 @synthesize topViewSnapshotPanGesture = _topViewSnapshotPanGesture;
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    UIPanGestureRecognizer *pan = (UIPanGestureRecognizer*)gestureRecognizer;
+    CGPoint translation = [pan translationInView:self.view];
+    if (translation.x < 0) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 - (void)setTapGesture:(BOOL)state {
     self.resetTapGesture.enabled = state;
 }
@@ -313,7 +323,10 @@ NSString *const ECSlidingViewTopDidReset             = @"ECSlidingViewTopDidRese
         
         CGPoint translation = [recognizer translationInView:self.view];
         
-        
+//        if (translation.x < 0) {
+//            recognizer.enabled = NO;
+//            recognizer.enabled = YES;
+//        }
         
         if(fabs(translation.x) > fabs(translation.y))
         {
@@ -361,6 +374,7 @@ NSString *const ECSlidingViewTopDidReset             = @"ECSlidingViewTopDidRese
 
 - (UIPanGestureRecognizer *)panGesture
 {
+    _panGesture.delegate = self;
     return _panGesture;
 }
 
